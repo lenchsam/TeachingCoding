@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TestCompiler : MonoBehaviour
@@ -6,14 +7,9 @@ public class TestCompiler : MonoBehaviour
     {
         Debug.Log("TestCompiler started");
 
-        string sourceCode = "if (x == 10) { return true; }";
+        string sourceCode = "if (x == 10) { x = 5; }";
 
         Lexer lexer = new Lexer(sourceCode);
-        var tokens = lexer.Tokenise();
-
-        foreach (var token in tokens)
-        {
-            Debug.Log($"Type: {token.Type} | Lexeme: '{token.Lexeme}'");
-        }
+        List<Token> tokens = lexer.Tokenise();
     }
 }

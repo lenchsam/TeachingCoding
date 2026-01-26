@@ -1,16 +1,77 @@
-using UnityEngine;
+using System.Collections.Generic;
 
-public class AST : MonoBehaviour
+public abstract class Statement { }
+public abstract class Expression { }
+
+public class AssignmentStatement : Statement
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public string Identifier;
+    public Expression Value;
+    public AssignmentStatement(string identifier, Expression value)
     {
-        
+        Identifier = identifier;
+        Value = value;
     }
+}
 
-    // Update is called once per frame
-    void Update()
+public class IfStatement : Statement
+{
+    public Expression Condition;
+    public List<Statement> ThenBranch;
+    public List<Statement> ElseBranch;
+    public IfStatement(Expression condition, List<Statement> thenBranch, List<Statement> elseBranch)
     {
-        
+        Condition = condition;
+        ThenBranch = thenBranch;
+        ElseBranch = elseBranch;
+    }
+}
+
+public class WhileStatement : Statement
+{
+    public Expression Condition;
+    public List<Statement> Body;
+    public WhileStatement(Expression condition, List<Statement> body)
+    {
+        Condition = condition;
+        Body = body;
+    }
+}
+public class ExpressionStatement : Statement
+{
+    public Expression Expression;
+    public ExpressionStatement(Expression expression)
+    {
+        Expression = expression;
+    }
+}
+public class BinaryExpression : Expression
+{
+    public Expression Left;
+    public TokenType Operator;
+    public Expression Right;
+    public BinaryExpression(Expression left, TokenType op, Expression right)
+    {
+        Left = left;
+        Operator = op;
+        Right = right;
+    }
+}
+
+public class LiteralExpression : Expression
+{
+    public object Value;
+    public LiteralExpression(object value)
+    {
+        Value = value;
+    }
+}
+
+public class VariableExpression : Expression
+{
+    public string Name;
+    public VariableExpression(string name)
+    {
+        Name = name;
     }
 }
