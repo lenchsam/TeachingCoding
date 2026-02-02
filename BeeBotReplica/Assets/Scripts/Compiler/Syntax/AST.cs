@@ -47,11 +47,13 @@ public class ExpressionStatement : Statement
 }
 public class MoveStatement : Statement
 {
+    public Expression Target;
     public Expression X;
     public Expression Y;
     public Expression Z;
-    public MoveStatement(Expression x, Expression y, Expression z)
+    public MoveStatement(Expression target, Expression x, Expression y, Expression z)
     {
+        Target = target;
         X = x;
         Y = y;
         Z = z;

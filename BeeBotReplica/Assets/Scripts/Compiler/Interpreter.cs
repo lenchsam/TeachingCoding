@@ -18,6 +18,10 @@ public class Interpreter : MonoBehaviour
             Execute(statement);
         }
     }
+    public void SetGlobal(string name, object value)
+    {
+        _environment.Assign(name, value);
+    }
 
     //perform the action described by the statement
     private void Execute(Statement stmt)
@@ -59,14 +63,22 @@ public class Interpreter : MonoBehaviour
                 break;
             case MoveStatement m:
                 //evaluate the numbers
-                int x = (int)Evaluate(m.X);
-                int y = (int)Evaluate(m.Y);
-                int z = (int)Evaluate(m.Z);
+                object targetObj = Evaluate(m.Target);
 
                 //move target to new position
-                _target.Translate(x, y, z);
+                if (targetObj is Transform t)
+                {
+                    int x = (int)Evaluate(m.X);
+                    int y = (int)Evaluate(m.Y);
+                    int z = (int)Evaluate(m.Z);
 
-                UnityEngine.Debug.Log($"Moved to {x}, {y}, {z}");
+                    t.Translate(x, y, z);
+                    UnityEngine.Debug.Log($"Moved {t.name} by ({x},{y},{z})");
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError($"[Runtime Error] '{m.Target}' is not a valid Game Object!");
+                }
                 break;
         }
     }

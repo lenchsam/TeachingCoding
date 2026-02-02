@@ -73,24 +73,29 @@ public class RecursiveDescentParser
 
         return new WhileStatement(condition, body);
     }
+
     private Statement ParseMoveStatement()
     {
         Consume(TokenType.LeftParen, "Expect '(' after 'move'");
 
-        Expression x = ParseExpression();
-        Consume(TokenType.Semicolon, "Expect ',' or ';' after x coordinate");
+        //parse target
+        Expression target = ParseExpression();
+        Consume(TokenType.Semicolon, "Expect separator after target");
 
+        //parse coords
         //temporarily using semicolon as separator as comma is not implemented yet
+        Expression x = ParseExpression();
+        Consume(TokenType.Semicolon, "Expect separator after x");
 
         Expression y = ParseExpression();
-        Consume(TokenType.Semicolon, "Expect ',' or ';' after y coordinate");
+        Consume(TokenType.Semicolon, "Expect separator after y");
 
         Expression z = ParseExpression();
 
         Consume(TokenType.RightParen, "Expect ')' after z coordinate");
         Consume(TokenType.Semicolon, "Expect ';' after statement");
 
-        return new MoveStatement(x, y, z);
+        return new MoveStatement(target, x, y, z);
     }
     private List<Statement> ParseBlock()
     {
