@@ -45,6 +45,19 @@ public class ExpressionStatement : Statement
         Expression = expression;
     }
 }
+public class MoveStatement : Statement
+{
+    public Expression X;
+    public Expression Y;
+    public Expression Z;
+    public MoveStatement(Expression x, Expression y, Expression z)
+    {
+        X = x;
+        Y = y;
+        Z = z;
+    }
+}
+
 public class BinaryExpression : Expression
 {
     public Expression Left;
@@ -57,7 +70,6 @@ public class BinaryExpression : Expression
         Right = right;
     }
 }
-
 public class LiteralExpression : Expression
 {
     public object Value;
@@ -66,7 +78,6 @@ public class LiteralExpression : Expression
         Value = value;
     }
 }
-
 public class VariableExpression : Expression
 {
     public string Name;

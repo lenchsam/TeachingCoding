@@ -20,6 +20,7 @@ public enum TokenType
     LeftBrace,
     RightBrace,
     Semicolon,
+    Move,
     EOF //End of file
 }
 public struct Token
@@ -57,11 +58,12 @@ public class Lexer
     //needed for converting string to token type
     private static readonly Dictionary<string, TokenType> _tokenTypeToString = new Dictionary<string, TokenType>
     {
-        { "if", TokenType.If},
-        {"else", TokenType.Else},
-        {"while", TokenType.While},
-        {"true", TokenType.True},
-        {"false", TokenType.False},
+        { "if",     TokenType.If},
+        { "else",   TokenType.Else},
+        { "while",  TokenType.While},
+        { "true",   TokenType.True},
+        { "false",  TokenType.False},
+        { "move",   TokenType.Move },
     };
 
     public Lexer(string source)
