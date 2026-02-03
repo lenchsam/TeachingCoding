@@ -20,6 +20,7 @@ public enum TokenType
     LeftBrace,
     RightBrace,
     Semicolon,
+    Comma,
     Move,
     EOF //End of file
 }
@@ -94,6 +95,7 @@ public class Lexer
             case '{': AddToken(TokenType.LeftBrace);  break;
             case '}': AddToken(TokenType.RightBrace); break;
             case ';': AddToken(TokenType.Semicolon);  break;
+            case ',': AddToken(TokenType.Comma);      break;
             case '+': AddToken(TokenType.Plus);       break;
             case '*': AddToken(TokenType.Star);       break;
             case '/': AddToken(TokenType.Slash);      break;

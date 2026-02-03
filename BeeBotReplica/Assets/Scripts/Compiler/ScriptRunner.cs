@@ -14,11 +14,7 @@ public class ScriptRunner : MonoBehaviour
     public TMP_InputField TMP_IF;
     public List<ScriptableObjectEntry> ObjectsToControl;
 
-    [TextArea(5, 20)]
-    public string SourceCode = @"
-        move(Player; 5; 0; 0);
-        move(Enemy; -5; 0; 0);
-    ";
+    public string SourceCode;
 
     [ContextMenu("Run Code")]
     public void RunCode()
