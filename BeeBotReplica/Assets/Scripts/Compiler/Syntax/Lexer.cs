@@ -89,16 +89,15 @@ public class Lexer
         switch (c)
         {
             //single characters
-            case '(': AddToken(TokenType.LeftParen); break;
+            case '(': AddToken(TokenType.LeftParen);  break;
             case ')': AddToken(TokenType.RightParen); break;
-            case '{': AddToken(TokenType.LeftBrace); break;
+            case '{': AddToken(TokenType.LeftBrace);  break;
             case '}': AddToken(TokenType.RightBrace); break;
-            case ';': AddToken(TokenType.Semicolon); break;
-            case '+': AddToken(TokenType.Plus); break;
-            case '-': AddToken(TokenType.Minus); break;
-            case '*': AddToken(TokenType.Star); break;
-            case '/': AddToken(TokenType.Slash); break;
-
+            case ';': AddToken(TokenType.Semicolon);  break;
+            case '+': AddToken(TokenType.Plus);       break;
+            case '*': AddToken(TokenType.Star);       break;
+            case '/': AddToken(TokenType.Slash);      break;
+            case '-': AddToken(TokenType.Minus);      break;
             //two characters
             case '=':
                 //check if next char is also =

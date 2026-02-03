@@ -88,3 +88,13 @@ public class VariableExpression : Expression
         Name = name;
     }
 }
+public class UnaryExpression : Expression
+{
+    public Token Operator;
+    public Expression Right;
+    public UnaryExpression(Token operatorToken, Expression right)
+    {
+        Operator = operatorToken;
+        Right = right;
+    }
+}

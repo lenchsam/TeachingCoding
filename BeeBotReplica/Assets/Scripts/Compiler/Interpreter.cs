@@ -5,12 +5,7 @@ using UnityEngine;
 public class Interpreter : MonoBehaviour
 {
     private Environment _environment = new Environment();
-    private Transform _target;
 
-    public Interpreter(Transform target)
-    {
-        _target = target;
-    }
     public void Interpret(List<Statement> statements)
     {
         foreach (var statement in statements)
@@ -98,7 +93,17 @@ public class Interpreter : MonoBehaviour
             case LiteralExpression l: return l.Value;
             case VariableExpression v: return _environment.Get(v.Name);
             case BinaryExpression b: return EvaluateBinary(b);
+            case UnaryExpression u:
+                object right = Evaluate(u.Right);
+
+                if(u.Operator.Type == TokenType.Minus)
+                {
+                    if (right is int r) return -r;
+                }
+                throw new Exception("Unknown Operator Type");
             default: throw new Exception("Unknown expression.");
+
+
         }
     }
 

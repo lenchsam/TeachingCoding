@@ -30,7 +30,7 @@ public class ScriptRunner : MonoBehaviour
         List<Statement> statements = parser.Parse();
 
         //interpret
-        Interpreter interpreter = new Interpreter(this.transform);
+        Interpreter interpreter = new Interpreter();
 
         //set up global variables
         foreach (var entry in ObjectsToControl)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Runtime.ConstrainedExecution;
 
 public class RecursiveDescentParser
@@ -160,12 +161,12 @@ public class RecursiveDescentParser
     // * and /
     private Expression ParseFactor()
     {
-        Expression expr = ParsePrimary();
+        Expression expr = ParseUnary();
 
         while (Match(TokenType.Star, TokenType.Slash))
         {
             TokenType op = Previous().Type;
-            Expression right = ParsePrimary();
+            Expression right = ParseUnary();
             expr = new BinaryExpression(expr, op, right);
         }
 
@@ -197,6 +198,18 @@ public class RecursiveDescentParser
         }
 
         throw new Exception("unrecognised token");
+    }
+
+    private Expression ParseUnary()
+    {
+        if (Match(TokenType.Minus))
+        {
+            Token operatorToken = Previous();
+            Expression right = ParseUnary();
+
+            return new UnaryExpression(operatorToken, right);
+        }
+        return ParsePrimary();
     }
 
     #endregion
