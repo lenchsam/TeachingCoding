@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 [System.Serializable]
 public struct ScriptableObjectEntry
@@ -10,6 +11,7 @@ public struct ScriptableObjectEntry
 
 public class ScriptRunner : MonoBehaviour
 {
+    public TMP_InputField TMP_IF;
     public List<ScriptableObjectEntry> ObjectsToControl;
 
     [TextArea(5, 20)]
@@ -44,6 +46,11 @@ public class ScriptRunner : MonoBehaviour
         interpreter.Interpret(statements);
     }
 
+    public void Run()
+    {
+        SourceCode = TMP_IF.text;
+        RunCode();
+    }
     void Start()
     {
         RunCode();
