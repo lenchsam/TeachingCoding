@@ -44,14 +44,20 @@ public class ExpressionStatement : Statement
         Expression = expression;
     }
 }
+public enum Direction
+{
+    North,
+    South,
+    East,
+    West
+}
+
 public class MoveStatement : Statement
 {
-    public Expression X;
-    public Expression Y;
-    public MoveStatement(Expression x, Expression y)
+    public Direction Direction;
+    public MoveStatement(Direction direction)
     {
-        X = x;
-        Y = y;
+        Direction = direction;
     }
 }
 public class MoveToStatement : Statement

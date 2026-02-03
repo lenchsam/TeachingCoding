@@ -80,16 +80,21 @@ public class RecursiveDescentParser
         //parse syntax - (x, y)
         Consume(TokenType.LeftParen, "Expect '(' after 'move'");
 
-        Expression x = ParseExpression();
+        Direction dir;
+        if (Match(TokenType.North)) dir = Direction.North;
+        else if (Match(TokenType.South)) dir = Direction.South;
+        else if (Match(TokenType.East)) dir = Direction.East;
+        else if (Match(TokenType.West)) dir = Direction.West;
+        else
+        {
+            ConsoleManager.Log("Expected direction (North, South, East, or West)");
+            throw new Exception("Expected direction");
+        }
 
-        Consume(TokenType.Comma, "Expect separator after x");
-
-        Expression y = ParseExpression();
-
-        Consume(TokenType.RightParen, "Expect ')' after z coordinate");
+        Consume(TokenType.RightParen, "Expect ')' after direction");
         Consume(TokenType.Semicolon, "Expect ';' after statement");
 
-        return new MoveStatement(x, y);
+        return new MoveStatement(dir);
     }
 
     private MoveToStatement ParseMoveToStatement()

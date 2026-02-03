@@ -58,17 +58,25 @@ public class Interpreter : MonoBehaviour
                 Evaluate(e.Expression);
                 break;
             case MoveStatement m:
-                //evaluate the numbers
                 object moveTargetObj = _environment.Get("Player");
 
-                //move target to new position
                 if (moveTargetObj is Transform mt)
                 {
-                    int x = (int)Evaluate(m.X);
-                    int y = (int)Evaluate(m.Y);
-
-                    mt.Translate(x, 0, y);
-                    UnityEngine.Debug.Log($"Moved {mt.name} by ({x},{y})");
+                    switch (m.Direction)
+                    {
+                        case Direction.North:
+                            mt.Translate(0, 0, 1);  // +Z
+                            break;
+                        case Direction.South:
+                            mt.Translate(0, 0, -1); // -Z
+                            break;
+                        case Direction.East:
+                            mt.Translate(1, 0, 0);  // +X
+                            break;
+                        case Direction.West:
+                            mt.Translate(-1, 0, 0); // -X
+                            break;
+                    }
                 }
                 break;
             case MoveToStatement m:
@@ -82,7 +90,6 @@ public class Interpreter : MonoBehaviour
                     int y = (int)Evaluate(m.Y);
 
                     mtt.position = new Vector3(x, 0, y);
-                    UnityEngine.Debug.Log($"Moved {mtt.name} by ({x},{y})");
                 }
                 break;
             case AttackStatement a:

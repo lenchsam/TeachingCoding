@@ -11,17 +11,17 @@ public struct ScriptableObjectEntry
 
 public class ScriptRunner : MonoBehaviour
 {
-    public TMP_InputField TMP_IF;
-    public List<ScriptableObjectEntry> ObjectsToControl;
+    [SerializeField] private TMP_InputField _TMP_IF;
+    [SerializeField] private List<ScriptableObjectEntry> ObjectsToControl;
 
-    public string SourceCode;
+     private string _sourceCode = "";
 
     [ContextMenu("Run Code")]
     public void RunCode()
     {
         ConsoleManager.ClearLogs();
         //tokenise
-        Lexer lexer = new Lexer(SourceCode);
+        Lexer lexer = new Lexer(_sourceCode);
         List<Token> tokens = lexer.Tokenise();
 
         //parse
@@ -45,7 +45,7 @@ public class ScriptRunner : MonoBehaviour
 
     public void Run()
     {
-        SourceCode = TMP_IF.text;
+        _sourceCode = _TMP_IF.text;
         RunCode();
     }
     void Start()

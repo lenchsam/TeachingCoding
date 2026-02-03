@@ -21,6 +21,11 @@ public enum TokenType
     RightBrace,
     Semicolon,
     Comma,
+    //custom directions
+    North,
+    South,
+    East,
+    West,
     //custom functions
     Move,
     MoveTo,
@@ -71,7 +76,11 @@ public class Lexer
         { "Move",   TokenType.Move },
         { "MoveTo", TokenType.MoveTo },
         { "Attack", TokenType.Attack },
-        { "CanAttack", TokenType.CanAttack }
+        { "CanAttack", TokenType.CanAttack },
+        { "North",  TokenType.North },
+        { "South",  TokenType.South },
+        { "East",   TokenType.East },
+        { "West",   TokenType.West }
     };
 
     public Lexer(string source)
