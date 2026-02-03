@@ -202,6 +202,7 @@ public class RecursiveDescentParser
 
     private Expression ParseUnary()
     {
+        //can add other types here later such as !
         if (Match(TokenType.Minus))
         {
             Token operatorToken = Previous();
