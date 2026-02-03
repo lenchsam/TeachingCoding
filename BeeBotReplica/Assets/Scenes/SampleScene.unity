@@ -244,7 +244,7 @@ MonoBehaviour:
   m_CaretColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_CustomCaretColor: 0
   m_SelectionColor: {r: 0.65882355, g: 0.80784315, b: 1, a: 0.7529412}
-  m_Text: "i = 5;\n\nwhile(i){\n\tMove(-1,1);\n\ti = i - 1;\n}"
+  m_Text: "repeat(5) {\n    Move(East);\n    Move(North);\n} "
   m_CaretBlinkRate: 0.85
   m_CaretWidth: 1
   m_ReadOnly: 0
@@ -598,13 +598,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.16360517, y: -0, z: -0, w: 0.9865259}
-  m_LocalPosition: {x: 0, y: 8.02, z: -15.66}
+  m_LocalRotation: {x: 0.4074073, y: -0, z: -0, w: 0.9132466}
+  m_LocalPosition: {x: 0, y: 22.86, z: -20.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 18.832, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 48.084, y: 0, z: 0}
 --- !u!114 &330585547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -987,7 +987,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "i = 5;\n\nwhile(i){\n\tMove(-1,1);\n\ti = i - 1;\n}\u200B"
+  m_text: "repeat(5) {\n    Move(East);\n    Move(North);\n} \u200B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -36,6 +36,17 @@ public class WhileStatement : Statement
         Body = body;
     }
 }
+public class RepeatStatement : Statement
+{
+    public Expression Count;
+    public List<Statement> Body;
+    public RepeatStatement(Expression count, List<Statement> body)
+    {
+        Count = count;
+        Body = body;
+    }
+}
+
 public class ExpressionStatement : Statement
 {
     public Expression Expression;
@@ -59,28 +70,6 @@ public class MoveStatement : Statement
     {
         Direction = direction;
     }
-}
-public class MoveToStatement : Statement
-{
-    public Expression X;
-    public Expression Y;
-    public MoveToStatement(Expression x, Expression y)
-    {
-        X = x;
-        Y = y;
-    }
-}
-public class AttackStatement : Statement
-{
-    public Expression Target;
-    public AttackStatement(Expression target)
-    {
-        Target = target;
-    }
-}
-public class CanAttack : Statement
-{
-    
 }
 #endregion
 

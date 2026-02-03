@@ -25,9 +25,8 @@ public class RecursiveDescentParser
     {
         if (Match(TokenType.If)) return ParseIfStatement();
         else if (Match(TokenType.While)) return ParseWhileStatement();
+        else if (Match(TokenType.Repeat)) return ParseRepeatStatement();
         else if (Match(TokenType.Move)) return ParseMoveStatement();
-        else if (Match(TokenType.MoveTo)) return ParseMoveToStatement();
-        else if (Match(TokenType.Attack)) return ParseAttackStatement();
 
         if (Check(TokenType.Identifier) && CheckNext(TokenType.Equals))
         {
@@ -74,6 +73,16 @@ public class RecursiveDescentParser
 
         return new WhileStatement(condition, body);
     }
+    private RepeatStatement ParseRepeatStatement()
+    {
+        Consume(TokenType.LeftParen, "Expect '(' after 'Repeat'");
+        Expression count = ParseExpression();
+        Consume(TokenType.RightParen, "Expect ')' after count");
+
+        List<Statement> body = ParseBlock();
+
+        return new RepeatStatement(count, body);
+    }
 
     private MoveStatement ParseMoveStatement()
     {
@@ -95,33 +104,6 @@ public class RecursiveDescentParser
         Consume(TokenType.Semicolon, "Expect ';' after statement");
 
         return new MoveStatement(dir);
-    }
-
-    private MoveToStatement ParseMoveToStatement()
-    {
-        //parse syntax - (x, y)
-        Consume(TokenType.LeftParen, "Expect '(' after 'move'");
-
-        Expression x = ParseExpression();
-
-        Consume(TokenType.Comma, "Expect separator after x");
-
-        Expression y = ParseExpression();
-
-        Consume(TokenType.RightParen, "Expect ')' after z coordinate");
-        Consume(TokenType.Semicolon, "Expect ';' after statement");
-
-        return new MoveToStatement(x, y);
-    }
-
-    private AttackStatement ParseAttackStatement()
-    {
-        Consume(TokenType.LeftParen, "Expect '(' after 'attack'");
-        //parse target
-        Expression target = ParseExpression();
-        Consume(TokenType.RightParen, "Expect ')' after target");
-        Consume(TokenType.Semicolon, "Expect ';' after statement");
-        return new AttackStatement(target);
     }
     private List<Statement> ParseBlock()
     {

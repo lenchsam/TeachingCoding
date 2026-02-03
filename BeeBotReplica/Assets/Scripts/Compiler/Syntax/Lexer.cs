@@ -7,6 +7,7 @@ public enum TokenType
     If,
     Else,
     While,
+    Repeat, //custom keyword which is just a loop for a set number of times
     True,
     False,
     Plus,
@@ -28,9 +29,6 @@ public enum TokenType
     West,
     //custom functions
     Move,
-    MoveTo,
-    Attack,
-    CanAttack,
     EOF //End of file
 }
 public struct Token
@@ -71,12 +69,10 @@ public class Lexer
         { "if",     TokenType.If},
         { "else",   TokenType.Else},
         { "while",  TokenType.While},
+        { "repeat", TokenType.Repeat},
         { "true",   TokenType.True},
         { "false",  TokenType.False},
         { "Move",   TokenType.Move },
-        { "MoveTo", TokenType.MoveTo },
-        { "Attack", TokenType.Attack },
-        { "CanAttack", TokenType.CanAttack },
         { "North",  TokenType.North },
         { "South",  TokenType.South },
         { "East",   TokenType.East },

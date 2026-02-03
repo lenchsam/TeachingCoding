@@ -53,6 +53,20 @@ public class Interpreter : MonoBehaviour
                     }
                 }
                 break;
+            case RepeatStatement r:
+                int repeatCount = (int)Evaluate(r.Count);
+
+                if (repeatCount < 0)
+                {
+                    ConsoleManager.Log("Repeat count must be positive");
+                    throw new Exception("Repeat count must be positive");
+                }
+
+                for (int i = 0; i < repeatCount; i++)
+                {
+                    ExecuteBlock(r.Body);
+                }
+                break;
 
             case ExpressionStatement e:
                 Evaluate(e.Expression);
@@ -79,33 +93,6 @@ public class Interpreter : MonoBehaviour
                     }
                 }
                 break;
-            case MoveToStatement m:
-                //evaluate the numbers
-                object moveToTargetObj = _environment.Get("Player");
-
-                //move target to new position
-                if (moveToTargetObj is Transform mtt)
-                {
-                    int x = (int)Evaluate(m.X);
-                    int y = (int)Evaluate(m.Y);
-
-                    mtt.position = new Vector3(x, 0, y);
-                }
-                break;
-            case AttackStatement a:
-                object attackTargetObj = Evaluate(a.Target);
-
-                if(attackTargetObj is Transform at)
-                {
-                    //TODO: code for attacking
-                    UnityEngine.Debug.Log($"player is attacking {at.name}" );
-                }
-                else
-                {
-                    ConsoleManager.Log("Attack target is not valid!");
-                    throw new Exception("Attack target is not valid!");
-                }
-                    break;
         }
     }
 
