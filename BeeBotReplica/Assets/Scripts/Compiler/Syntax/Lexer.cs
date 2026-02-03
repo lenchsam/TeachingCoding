@@ -25,6 +25,7 @@ public enum TokenType
     Move,
     MoveTo,
     Attack,
+    CanAttack,
     EOF //End of file
 }
 public struct Token
@@ -69,7 +70,8 @@ public class Lexer
         { "false",  TokenType.False},
         { "Move",   TokenType.Move },
         { "MoveTo", TokenType.MoveTo },
-        { "Attack", TokenType.Attack }
+        { "Attack", TokenType.Attack },
+        { "CanAttack", TokenType.CanAttack }
     };
 
     public Lexer(string source)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 public abstract class Statement { }
 public abstract class Expression { }
 
+#region statements
 public class AssignmentStatement : Statement
 {
     public string Identifier;
@@ -13,7 +14,6 @@ public class AssignmentStatement : Statement
         Value = value;
     }
 }
-
 public class IfStatement : Statement
 {
     public Expression Condition;
@@ -26,7 +26,6 @@ public class IfStatement : Statement
         ElseBranch = elseBranch;
     }
 }
-
 public class WhileStatement : Statement
 {
     public Expression Condition;
@@ -73,7 +72,13 @@ public class AttackStatement : Statement
         Target = target;
     }
 }
+public class CanAttack : Statement
+{
+    
+}
+#endregion
 
+#region expressions
 public class BinaryExpression : Expression
 {
     public Expression Left;
@@ -112,3 +117,4 @@ public class UnaryExpression : Expression
         Right = right;
     }
 }
+#endregion

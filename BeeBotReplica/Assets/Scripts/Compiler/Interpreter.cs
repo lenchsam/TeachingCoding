@@ -94,6 +94,7 @@ public class Interpreter : MonoBehaviour
                 }
                 else
                 {
+                    ConsoleManager.Log("Attack target is not valid!");
                     throw new Exception("target or attacker is not a valid Game Object!");
                 }
                     break;
