@@ -19,6 +19,7 @@ public class ScriptRunner : MonoBehaviour
     [ContextMenu("Run Code")]
     public void RunCode()
     {
+        ConsoleManager.ClearLogs();
         //tokenise
         Lexer lexer = new Lexer(SourceCode);
         List<Token> tokens = lexer.Tokenise();

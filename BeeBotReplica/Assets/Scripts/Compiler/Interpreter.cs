@@ -48,6 +48,7 @@ public class Interpreter : MonoBehaviour
                     safetyCounter++;
                     if (safetyCounter > 1000)
                     {
+                        ConsoleManager.Log("Infinite loop detected");
                         throw new Exception("infinite loop detected");
                     }
                 }
@@ -95,7 +96,7 @@ public class Interpreter : MonoBehaviour
                 else
                 {
                     ConsoleManager.Log("Attack target is not valid!");
-                    throw new Exception("target or attacker is not a valid Game Object!");
+                    throw new Exception("Attack target is not valid!");
                 }
                     break;
         }
@@ -123,8 +124,11 @@ public class Interpreter : MonoBehaviour
                 {
                     if (right is int r) return -r;
                 }
+                ConsoleManager.Log("Unknown Operator Type");
                 throw new Exception("Unknown Operator Type");
-            default: throw new Exception("Unknown expression.");
+            default:
+                ConsoleManager.Log("Unknown expression");
+                throw new Exception("Unknown expression.");
 
 
         }
@@ -144,14 +148,19 @@ public class Interpreter : MonoBehaviour
                 case TokenType.Minus: return l - r;
                 case TokenType.Star: return l * r;
                 case TokenType.Slash:
-                    if (r == 0) throw new System.Exception("Division by zero");
+                    if (r == 0) {
+                        ConsoleManager.Log("Cannot divide by zero");
+                        throw new System.Exception("Division by zero"); 
+                    }
                     return l / r;
                 case TokenType.DoubleEquals: return l == r;
                 //add more operators later
-                default: throw new System.Exception($"Operator {b.Operator} not supported for Integers");
+                default:
+                    ConsoleManager.Log($"Operator {b.Operator} not supported for Integers");
+                    throw new System.Exception($"Operator {b.Operator} not supported for Integers");
             }
         }
-
+        ConsoleManager.Log($"Cannot perform operation {b.Operator} on {left.GetType()} and {right.GetType()}");
         throw new System.Exception($"Cannot perform operation {b.Operator} on {left.GetType()} and {right.GetType()}");
     }
 

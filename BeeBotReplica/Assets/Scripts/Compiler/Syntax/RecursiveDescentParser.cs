@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Runtime.ConstrainedExecution;
 
 public class RecursiveDescentParser
 {
@@ -218,8 +216,8 @@ public class RecursiveDescentParser
             Consume(TokenType.RightParen, "Expect ')' after expression.");
             return expr;
         }
-
-        throw new Exception("unrecognised token");
+        ConsoleManager.Log($"unrecognised token: {Peek().Lexeme}");
+        throw new Exception($"unrecognised token: {Peek().Lexeme}");
     }
 
     private Expression ParseUnary()
@@ -280,7 +278,9 @@ public class RecursiveDescentParser
     private Token Consume(TokenType type, string message)
     {
         if (Check(type)) return Advance();
-        throw new Exception("parse error");
+
+        ConsoleManager.Log(message);
+        throw new Exception(message);
     }
     #endregion
 }
