@@ -22,6 +22,7 @@ public enum TokenType
     Semicolon,
     Comma,
     Move,
+    Attack,
     EOF //End of file
 }
 public struct Token
@@ -64,7 +65,8 @@ public class Lexer
         { "while",  TokenType.While},
         { "true",   TokenType.True},
         { "false",  TokenType.False},
-        { "move",   TokenType.Move },
+        { "Move",   TokenType.Move },
+        { "Attack", TokenType.Attack }
     };
 
     public Lexer(string source)

@@ -28,6 +28,7 @@ public class RecursiveDescentParser
         if (Match(TokenType.If)) return ParseIfStatement();
         else if (Match(TokenType.While)) return ParseWhileStatement();
         else if (Match(TokenType.Move)) return ParseMoveStatement();
+        else if (Match(TokenType.Attack)) return ParseAttackStatement();
 
         if (Check(TokenType.Identifier) && CheckNext(TokenType.Equals))
         {
@@ -75,7 +76,7 @@ public class RecursiveDescentParser
         return new WhileStatement(condition, body);
     }
 
-    private Statement ParseMoveStatement()
+    private MoveStatement ParseMoveStatement()
     {
         Consume(TokenType.LeftParen, "Expect '(' after 'move'");
 
@@ -96,6 +97,20 @@ public class RecursiveDescentParser
         Consume(TokenType.Semicolon, "Expect ';' after statement");
 
         return new MoveStatement(target, x, y, z);
+    }
+    
+    private AttackStatement ParseAttackStatement()
+    {
+        Consume(TokenType.LeftParen, "Expect '(' after 'attack'");
+        //parse attacker
+        Expression attacker = ParseExpression();
+        Consume(TokenType.Comma, "Expect ',' after attacker");
+
+        //parse target
+        Expression target = ParseExpression();
+        Consume(TokenType.RightParen, "Expect ')' after target");
+        Consume(TokenType.Semicolon, "Expect ';' after statement");
+        return new AttackStatement(attacker, target);
     }
     private List<Statement> ParseBlock()
     {

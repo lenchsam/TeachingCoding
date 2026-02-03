@@ -59,6 +59,16 @@ public class MoveStatement : Statement
         Z = z;
     }
 }
+public class AttackStatement : Statement
+{
+    public Expression Attacker;
+    public Expression Target;
+    public AttackStatement(Expression attacker, Expression target)
+    {
+        Attacker = attacker;
+        Target = target;
+    }
+}
 
 public class BinaryExpression : Expression
 {

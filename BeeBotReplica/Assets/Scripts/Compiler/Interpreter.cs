@@ -58,23 +58,37 @@ public class Interpreter : MonoBehaviour
                 break;
             case MoveStatement m:
                 //evaluate the numbers
-                object targetObj = Evaluate(m.Target);
+                object moveTargetObj = Evaluate(m.Target);
 
                 //move target to new position
-                if (targetObj is Transform t)
+                if (moveTargetObj is Transform mt)
                 {
                     int x = (int)Evaluate(m.X);
                     int y = (int)Evaluate(m.Y);
                     int z = (int)Evaluate(m.Z);
 
-                    t.Translate(x, y, z);
-                    UnityEngine.Debug.Log($"Moved {t.name} by ({x},{y},{z})");
+                    mt.Translate(x, y, z);
+                    UnityEngine.Debug.Log($"Moved {mt.name} by ({x},{y},{z})");
                 }
                 else
                 {
-                    UnityEngine.Debug.LogError($"[Runtime Error] '{m.Target}' is not a valid Game Object!");
+                    throw new Exception("target is not a valid Game Object!");
                 }
                 break;
+            case AttackStatement a:
+                object attackerObj = Evaluate(a.Attacker);
+                object attackTargetObj = Evaluate(a.Target);
+
+                if(attackTargetObj is Transform at && attackerObj is Transform AT)
+                {
+                    //TODO: code for attacking
+                    UnityEngine.Debug.Log($"{AT.name} is attacking " + at.name);
+                }
+                else
+                {
+                    throw new Exception("target or attacker is not a valid Game Object!");
+                }
+                    break;
         }
     }
 
