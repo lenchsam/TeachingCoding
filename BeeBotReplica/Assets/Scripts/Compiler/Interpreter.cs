@@ -58,31 +58,39 @@ public class Interpreter : MonoBehaviour
                 break;
             case MoveStatement m:
                 //evaluate the numbers
-                object moveTargetObj = Evaluate(m.Target);
+                object moveTargetObj = _environment.Get("Player");
 
                 //move target to new position
                 if (moveTargetObj is Transform mt)
                 {
                     int x = (int)Evaluate(m.X);
                     int y = (int)Evaluate(m.Y);
-                    int z = (int)Evaluate(m.Z);
 
-                    mt.Translate(x, y, z);
-                    UnityEngine.Debug.Log($"Moved {mt.name} by ({x},{y},{z})");
+                    mt.Translate(x, 0, y);
+                    UnityEngine.Debug.Log($"Moved {mt.name} by ({x},{y})");
                 }
-                else
+                break;
+            case MoveToStatement m:
+                //evaluate the numbers
+                object moveToTargetObj = _environment.Get("Player");
+
+                //move target to new position
+                if (moveToTargetObj is Transform mtt)
                 {
-                    throw new Exception("target is not a valid Game Object!");
+                    int x = (int)Evaluate(m.X);
+                    int y = (int)Evaluate(m.Y);
+
+                    mtt.position = new Vector3(x, 0, y);
+                    UnityEngine.Debug.Log($"Moved {mtt.name} by ({x},{y})");
                 }
                 break;
             case AttackStatement a:
-                object attackerObj = Evaluate(a.Attacker);
                 object attackTargetObj = Evaluate(a.Target);
 
-                if(attackTargetObj is Transform at && attackerObj is Transform AT)
+                if(attackTargetObj is Transform at)
                 {
                     //TODO: code for attacking
-                    UnityEngine.Debug.Log($"{AT.name} is attacking " + at.name);
+                    UnityEngine.Debug.Log($"player is attacking {at.name}" );
                 }
                 else
                 {

@@ -21,7 +21,9 @@ public enum TokenType
     RightBrace,
     Semicolon,
     Comma,
+    //custom functions
     Move,
+    MoveTo,
     Attack,
     EOF //End of file
 }
@@ -66,6 +68,7 @@ public class Lexer
         { "true",   TokenType.True},
         { "false",  TokenType.False},
         { "Move",   TokenType.Move },
+        { "MoveTo", TokenType.MoveTo },
         { "Attack", TokenType.Attack }
     };
 

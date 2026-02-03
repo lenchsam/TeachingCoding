@@ -47,25 +47,29 @@ public class ExpressionStatement : Statement
 }
 public class MoveStatement : Statement
 {
-    public Expression Target;
     public Expression X;
     public Expression Y;
-    public Expression Z;
-    public MoveStatement(Expression target, Expression x, Expression y, Expression z)
+    public MoveStatement(Expression x, Expression y)
     {
-        Target = target;
         X = x;
         Y = y;
-        Z = z;
+    }
+}
+public class MoveToStatement : Statement
+{
+    public Expression X;
+    public Expression Y;
+    public MoveToStatement(Expression x, Expression y)
+    {
+        X = x;
+        Y = y;
     }
 }
 public class AttackStatement : Statement
 {
-    public Expression Attacker;
     public Expression Target;
-    public AttackStatement(Expression attacker, Expression target)
+    public AttackStatement(Expression target)
     {
-        Attacker = attacker;
         Target = target;
     }
 }

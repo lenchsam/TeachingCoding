@@ -28,6 +28,7 @@ public class RecursiveDescentParser
         if (Match(TokenType.If)) return ParseIfStatement();
         else if (Match(TokenType.While)) return ParseWhileStatement();
         else if (Match(TokenType.Move)) return ParseMoveStatement();
+        else if (Match(TokenType.MoveTo)) return ParseMoveToStatement();
         else if (Match(TokenType.Attack)) return ParseAttackStatement();
 
         if (Check(TokenType.Identifier) && CheckNext(TokenType.Equals))
@@ -78,39 +79,46 @@ public class RecursiveDescentParser
 
     private MoveStatement ParseMoveStatement()
     {
+        //parse syntax - (x, y)
         Consume(TokenType.LeftParen, "Expect '(' after 'move'");
 
-        //parse target
-        Expression target = ParseExpression();
-        Consume(TokenType.Comma, "Expect separator after target");
-
-        //parse coords
         Expression x = ParseExpression();
+
         Consume(TokenType.Comma, "Expect separator after x");
 
         Expression y = ParseExpression();
-        Consume(TokenType.Comma, "Expect separator after y");
-
-        Expression z = ParseExpression();
 
         Consume(TokenType.RightParen, "Expect ')' after z coordinate");
         Consume(TokenType.Semicolon, "Expect ';' after statement");
 
-        return new MoveStatement(target, x, y, z);
+        return new MoveStatement(x, y);
     }
-    
+
+    private MoveToStatement ParseMoveToStatement()
+    {
+        //parse syntax - (x, y)
+        Consume(TokenType.LeftParen, "Expect '(' after 'move'");
+
+        Expression x = ParseExpression();
+
+        Consume(TokenType.Comma, "Expect separator after x");
+
+        Expression y = ParseExpression();
+
+        Consume(TokenType.RightParen, "Expect ')' after z coordinate");
+        Consume(TokenType.Semicolon, "Expect ';' after statement");
+
+        return new MoveToStatement(x, y);
+    }
+
     private AttackStatement ParseAttackStatement()
     {
         Consume(TokenType.LeftParen, "Expect '(' after 'attack'");
-        //parse attacker
-        Expression attacker = ParseExpression();
-        Consume(TokenType.Comma, "Expect ',' after attacker");
-
         //parse target
         Expression target = ParseExpression();
         Consume(TokenType.RightParen, "Expect ')' after target");
         Consume(TokenType.Semicolon, "Expect ';' after statement");
-        return new AttackStatement(attacker, target);
+        return new AttackStatement(target);
     }
     private List<Statement> ParseBlock()
     {
