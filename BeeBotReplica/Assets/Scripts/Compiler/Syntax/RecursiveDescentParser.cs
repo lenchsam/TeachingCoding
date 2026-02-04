@@ -188,13 +188,23 @@ public class RecursiveDescentParser
 
         if (Match(TokenType.Number))
         {
-            //assumes integer
             return new LiteralExpression(int.Parse(Previous().Lexeme));
         }
 
         if (Match(TokenType.Identifier))
         {
-            return new VariableExpression(Previous().Lexeme);
+            string name = Previous().Lexeme;
+
+            //check if it's a function call
+            if (Match(TokenType.LeftParen))
+            {
+                //should have no arguments
+                Consume(TokenType.RightParen, "Expect ')' after function name.");
+                return new CallExpression(name);
+            }
+
+            //if not a function call, it's a variable
+            return new VariableExpression(name);
         }
 
         if (Match(TokenType.LeftParen))
@@ -203,6 +213,7 @@ public class RecursiveDescentParser
             Consume(TokenType.RightParen, "Expect ')' after expression.");
             return expr;
         }
+
         ConsoleManager.Log($"unrecognised token: {Peek().Lexeme}");
         throw new Exception($"unrecognised token: {Peek().Lexeme}");
     }

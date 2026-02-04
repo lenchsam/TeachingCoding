@@ -93,6 +93,7 @@ public class Interpreter : MonoBehaviour
                     }
                 }
                 break;
+
         }
     }
 
@@ -120,11 +121,25 @@ public class Interpreter : MonoBehaviour
                 }
                 ConsoleManager.Log("Unknown Operator Type");
                 throw new Exception("Unknown Operator Type");
+            case CallExpression c:
+                return EvaluateCall(c.Callee);
             default:
                 ConsoleManager.Log("Unknown expression");
                 throw new Exception("Unknown expression.");
 
 
+        }
+    }
+    private object EvaluateCall(string functionName)
+    {
+        switch (functionName)
+        {
+            case "GetNumEnemies":
+                return 1;
+
+            default:
+                ConsoleManager.Log($"Unknown function: {functionName}");
+                throw new Exception($"Unknown function: {functionName}");
         }
     }
 

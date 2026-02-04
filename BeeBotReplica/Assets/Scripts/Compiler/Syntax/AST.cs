@@ -73,6 +73,7 @@ public class MoveStatement : Statement
 }
 #endregion
 
+//expressions also holds premade functions which return a value
 #region expressions
 public class BinaryExpression : Expression
 {
@@ -110,6 +111,15 @@ public class UnaryExpression : Expression
     {
         Operator = operatorToken;
         Right = right;
+    }
+}
+public class CallExpression : Expression
+{
+    public string Callee; //name of the function
+
+    public CallExpression(string callee)
+    {
+        Callee = callee;
     }
 }
 #endregion
