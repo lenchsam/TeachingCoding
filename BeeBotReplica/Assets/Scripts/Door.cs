@@ -1,9 +1,10 @@
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Door : MonoBehaviour
 {
     private BoxCollider _collider;
+    [SerializeField] private string _sceneToLoad;
     private void Awake()
     {
         _collider = GetComponent<BoxCollider>();
@@ -15,7 +16,7 @@ public class Door : MonoBehaviour
         Debug.Log("Trigger entered by: " + other.name);
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Player entered the door trigger.");
+            SceneManager.LoadScene(_sceneToLoad);
         }
     }
 }
