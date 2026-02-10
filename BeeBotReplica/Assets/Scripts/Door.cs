@@ -13,7 +13,6 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger entered by: " + other.name);
         if (other.CompareTag("Player"))
         {
             SceneManager.LoadScene(_sceneToLoad);
