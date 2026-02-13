@@ -8,6 +8,10 @@ public class SettingsManager : MonoBehaviour
     UniversalAdditionalCameraData camData;
     private AntialiasingMode antialiasingMode = AntialiasingMode.None;
 
+    [SerializeField] private ColourPicker _textColour;
+    [SerializeField] private ColourPicker _backgroundColour;
+    [SerializeField] private ColourSettings _colourSettingsSO;
+
     private void Start()
     {
         //needed so camera in new scene can also have the changed settings
@@ -45,5 +49,11 @@ public class SettingsManager : MonoBehaviour
     private void SetOptionsMenuUI()
     {
 
+    }
+
+    public void SetColours()
+    {
+        _colourSettingsSO.TextColour = _textColour.GetColour();
+        _colourSettingsSO.BackgroundColour = _backgroundColour.GetColour();
     }
 }
