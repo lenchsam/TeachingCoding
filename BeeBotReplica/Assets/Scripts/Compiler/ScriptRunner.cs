@@ -40,7 +40,7 @@ public class ScriptRunner : MonoBehaviour
             }
         }
 
-        interpreter.Interpret(statements);
+        _ = interpreter.Interpret(statements);
     }
 
     public void Run()

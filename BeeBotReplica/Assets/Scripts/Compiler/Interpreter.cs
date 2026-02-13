@@ -1,16 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Interpreter : MonoBehaviour
 {
     private Environment _environment = new Environment();
 
-    public void Interpret(List<Statement> statements)
+    public async Task Interpret(List<Statement> statements)
     {
+        await Task.Yield();
         foreach (var statement in statements)
         {
-            Execute(statement);
+            await Task.Delay(500);
+
+            _ = Execute(statement);
         }
     }
     public void SetGlobal(string name, object value)
@@ -19,8 +23,9 @@ public class Interpreter : MonoBehaviour
     }
 
     //perform the action described by the statement
-    private void Execute(Statement stmt)
+    private async Task Execute(Statement stmt)
     {
+        await Task.Yield();
         switch (stmt)
         {
             case AssignmentStatement a:
@@ -35,7 +40,7 @@ public class Interpreter : MonoBehaviour
                 }
                 else if (i.ElseBranch != null)
                 {
-                    ExecuteBlock(i.ElseBranch);
+                    _ = ExecuteBlock(i.ElseBranch);
                 }
                 break;
 
@@ -43,7 +48,8 @@ public class Interpreter : MonoBehaviour
                 int safetyCounter = 0;
                 while (IsTruthy(Evaluate(w.Condition)))
                 {
-                    ExecuteBlock(w.Body);
+                    await Task.Delay(500);
+                    _ = ExecuteBlock(w.Body);
 
                     safetyCounter++;
                     if (safetyCounter > 1000)
@@ -64,7 +70,8 @@ public class Interpreter : MonoBehaviour
 
                 for (int i = 0; i < repeatCount; i++)
                 {
-                    ExecuteBlock(r.Body);
+                    await Task.Delay(500);
+                    _ = ExecuteBlock(r.Body);
                 }
                 break;
 
@@ -97,11 +104,13 @@ public class Interpreter : MonoBehaviour
         }
     }
 
-    private void ExecuteBlock(List<Statement> statements)
+    private async Task ExecuteBlock(List<Statement> statements)
     {
+        await Task.Yield();
         foreach (var stmt in statements)
         {
-            Execute(stmt);
+            await Task.Delay(500);
+            _ = Execute(stmt);
         }
     }
 
