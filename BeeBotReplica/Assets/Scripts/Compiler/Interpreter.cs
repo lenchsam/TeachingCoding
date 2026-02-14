@@ -14,7 +14,7 @@ public class Interpreter : MonoBehaviour
         {
             await Task.Delay(500);
 
-            _ = Execute(statement);
+            await Execute(statement);
         }
     }
     public void SetGlobal(string name, object value)
@@ -36,11 +36,11 @@ public class Interpreter : MonoBehaviour
             case IfStatement i:
                 if (IsTruthy(Evaluate(i.Condition)))
                 {
-                    ExecuteBlock(i.ThenBranch);
+                    await ExecuteBlock(i.ThenBranch);
                 }
                 else if (i.ElseBranch != null)
                 {
-                    _ = ExecuteBlock(i.ElseBranch);
+                    await ExecuteBlock(i.ElseBranch);
                 }
                 break;
 
@@ -49,7 +49,7 @@ public class Interpreter : MonoBehaviour
                 while (IsTruthy(Evaluate(w.Condition)))
                 {
                     await Task.Delay(500);
-                    _ = ExecuteBlock(w.Body);
+                    await ExecuteBlock(w.Body);
 
                     safetyCounter++;
                     if (safetyCounter > 1000)
@@ -71,7 +71,7 @@ public class Interpreter : MonoBehaviour
                 for (int i = 0; i < repeatCount; i++)
                 {
                     await Task.Delay(500);
-                    _ = ExecuteBlock(r.Body);
+                    await ExecuteBlock(r.Body);
                 }
                 break;
 
@@ -110,7 +110,7 @@ public class Interpreter : MonoBehaviour
         foreach (var stmt in statements)
         {
             await Task.Delay(500);
-            _ = Execute(stmt);
+            await Execute(stmt);
         }
     }
 
@@ -131,7 +131,7 @@ public class Interpreter : MonoBehaviour
                 ConsoleManager.Log("Unknown Operator Type");
                 throw new Exception("Unknown Operator Type");
             case CallExpression c:
-                return EvaluateCall(c.Callee);
+                return EvaluateCall(c);
             default:
                 ConsoleManager.Log("Unknown expression");
                 throw new Exception("Unknown expression.");
@@ -139,17 +139,53 @@ public class Interpreter : MonoBehaviour
 
         }
     }
-    private object EvaluateCall(string functionName)
+    private object EvaluateCall(CallExpression expr)
     {
-        switch (functionName)
+        switch (expr.Callee)
         {
             case "GetNumEnemies":
                 return 1;
+            case "IsPathBlocked":
+                //get direction
+                if (expr.Arguments.Count < 1)
+                {
+                    ConsoleManager.Log("IsPathBlocked requires 1 direction parameter.");
+                    throw new Exception("IsPathBlocked requires 1 direction parameter.");
+                }
 
+                //evaluate parameter
+                object arg = Evaluate(expr.Arguments[0]);
+                if (arg is Direction dir)
+                {
+                    return CheckForWall(dir);
+                }
+
+                ConsoleManager.Log("Parameter must be a Direction.");
+                throw new Exception("Parameter must be a Direction.");
             default:
-                ConsoleManager.Log($"Unknown function: {functionName}");
-                throw new Exception($"Unknown function: {functionName}");
+                ConsoleManager.Log($"Unknown function: {expr.Callee}");
+                throw new Exception($"Unknown function: {expr.Callee}");
         }
+    }
+
+    private bool CheckForWall(Direction dir)
+    {
+        object playerObj = _environment.Get("Player");
+        if (playerObj is Transform pt)
+        {
+            Vector3 worldDir = Vector3.forward;
+            switch (dir)
+            {
+                case Direction.North: worldDir = Vector3.forward; break;
+                case Direction.South: worldDir = Vector3.back; break;
+                case Direction.East: worldDir = Vector3.right; break;
+                case Direction.West: worldDir = Vector3.left; break;
+            }
+
+            //is a wall 1 unit away
+            return Physics.Raycast(pt.position, worldDir, 1f);
+        }
+        return false;
     }
 
     private object EvaluateBinary(BinaryExpression b)
@@ -157,7 +193,7 @@ public class Interpreter : MonoBehaviour
         object left = Evaluate(b.Left);
         object right = Evaluate(b.Right);
 
-        //is it an int
+        //are we evaluating an int
         if (left is int l && right is int r)
         {
             switch (b.Operator)
@@ -178,6 +214,20 @@ public class Interpreter : MonoBehaviour
                     throw new System.Exception($"Operator {b.Operator} not supported for Integers");
             }
         }
+
+        //are we evaluating a bool
+        if (left is bool lb && right is bool rb)
+        {
+            switch (b.Operator)
+            {
+                case TokenType.DoubleEquals: return lb == rb;
+                
+                default:
+                    ConsoleManager.Log($"Operator {b.Operator} not supported for Booleans");
+                    throw new System.Exception($"Operator {b.Operator} not supported for Booleans");
+            }
+        }
+
         ConsoleManager.Log($"Cannot perform operation {b.Operator} on {left.GetType()} and {right.GetType()}");
         throw new System.Exception($"Cannot perform operation {b.Operator} on {left.GetType()} and {right.GetType()}");
     }

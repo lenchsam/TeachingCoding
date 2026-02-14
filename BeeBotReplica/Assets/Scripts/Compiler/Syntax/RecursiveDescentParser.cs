@@ -186,6 +186,11 @@ public class RecursiveDescentParser
         if (Match(TokenType.False)) return new LiteralExpression(false);
         if (Match(TokenType.True)) return new LiteralExpression(true);
 
+        if (Match(TokenType.North)) return new LiteralExpression(Direction.North);
+        if (Match(TokenType.South)) return new LiteralExpression(Direction.South);
+        if (Match(TokenType.East)) return new LiteralExpression(Direction.East);
+        if (Match(TokenType.West)) return new LiteralExpression(Direction.West);
+
         if (Match(TokenType.Number))
         {
             return new LiteralExpression(int.Parse(Previous().Lexeme));
@@ -198,9 +203,19 @@ public class RecursiveDescentParser
             //check if it's a function call
             if (Match(TokenType.LeftParen))
             {
-                //should have no arguments
-                Consume(TokenType.RightParen, "Expect ')' after function name.");
-                return new CallExpression(name);
+                List<Expression> arguments = new List<Expression>();
+
+                //does it have parameters
+                if (!Check(TokenType.RightParen))
+                {
+                    do
+                    {
+                        arguments.Add(ParseExpression());
+                    } while (Match(TokenType.Comma));
+                }
+
+                Consume(TokenType.RightParen, "Expect ')' after function arguments.");
+                return new CallExpression(name, arguments);
             }
 
             //if not a function call, it's a variable

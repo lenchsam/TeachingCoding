@@ -116,10 +116,12 @@ public class UnaryExpression : Expression
 public class CallExpression : Expression
 {
     public string Callee; //name of the function
+    public List<Expression> Arguments;
 
-    public CallExpression(string callee)
+    public CallExpression(string callee, List<Expression> arguments)
     {
         Callee = callee;
+        Arguments = arguments;
     }
 }
 #endregion
