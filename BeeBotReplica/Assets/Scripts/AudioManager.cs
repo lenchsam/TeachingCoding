@@ -37,15 +37,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(Sounds soundToPlay)
     {
-        switch (soundToPlay) {
-            case Sounds.Success:
-                Debug.Log("Playing success sound");
-                audioSource.PlayOneShot(soundDictionary[Sounds.Success]);
-                break;
-            case Sounds.Failed:
-                Debug.Log("Playing failed sound");
-                audioSource.PlayOneShot(soundDictionary[Sounds.Failed]);
-                break;
-        }
+        audioSource.PlayOneShot(soundDictionary[soundToPlay]);
     }
 }
