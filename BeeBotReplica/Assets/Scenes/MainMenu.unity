@@ -2656,6 +2656,7 @@ MonoBehaviour:
   CodeRan:
     m_PersistentCalls:
       m_Calls: []
+  IsSuccess: 0
 --- !u!4 &435164058
 Transform:
   m_ObjectHideFlags: 0
@@ -11181,8 +11182,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 2008741338}
   soundArray:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: e43658a06b3b58b41a0b81f99a8d8ccf, type: 3}
+  - {fileID: 8300000, guid: 3eebfd4f58c07c84e8e07ce43515f0b7, type: 3}
 --- !u!4 &2008741337
 Transform:
   m_ObjectHideFlags: 0
