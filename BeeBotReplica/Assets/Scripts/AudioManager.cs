@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum Sounds{
     Success,
@@ -9,11 +9,11 @@ public enum Sounds{
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
-    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource _audioSource;
 
-    [SerializeField] private AudioClip[] soundArray = new AudioClip[2];
+    [SerializeField] private AudioClip[] _soundArray = new AudioClip[2];
 
-    private Dictionary<Sounds, AudioClip> soundDictionary;
+    private Dictionary<Sounds, AudioClip> _soundDictionary;
 
     private void Awake()
     {
@@ -23,10 +23,10 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            soundDictionary = new Dictionary<Sounds, AudioClip>
+            _soundDictionary = new Dictionary<Sounds, AudioClip>
             {
-                { Sounds.Success, soundArray[0] },
-                { Sounds.Failed, soundArray[1] }
+                { Sounds.Success, _soundArray[0] },
+                { Sounds.Failed, _soundArray[1] }
             };
         }
         else
@@ -37,6 +37,11 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(Sounds soundToPlay)
     {
-        audioSource.PlayOneShot(soundDictionary[soundToPlay]);
+        _audioSource.PlayOneShot(_soundDictionary[soundToPlay]);
+    }
+
+    public void AdjustVolume(float volume)
+    {
+        _audioSource.volume = volume;
     }
 }

@@ -5524,7 +5524,19 @@ MonoBehaviour:
   m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2008741336}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: AdjustVolume
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &909919819
 GameObject:
   m_ObjectHideFlags: 0
@@ -11180,8 +11192,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b256879d58f34c4eb93377f7f13f044, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 2008741338}
-  soundArray:
+  _audioSource: {fileID: 2008741338}
+  _soundArray:
   - {fileID: 8300000, guid: e43658a06b3b58b41a0b81f99a8d8ccf, type: 3}
   - {fileID: 8300000, guid: 3eebfd4f58c07c84e8e07ce43515f0b7, type: 3}
 --- !u!4 &2008741337
