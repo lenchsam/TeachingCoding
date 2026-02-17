@@ -48,8 +48,4 @@ public class ScriptRunner : MonoBehaviour
         _sourceCode = _TMP_IF.text;
         RunCode();
     }
-    void Start()
-    {
-        RunCode();
-    }
 }

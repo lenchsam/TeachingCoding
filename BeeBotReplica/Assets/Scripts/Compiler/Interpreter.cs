@@ -16,6 +16,9 @@ public class Interpreter : MonoBehaviour
 
             await Execute(statement);
         }
+        await Task.Delay(100);
+        if (!GameManager.Instance.IsSuccess)
+            GameManager.Instance.CodeRan.Invoke(false);
     }
     public void SetGlobal(string name, object value)
     {

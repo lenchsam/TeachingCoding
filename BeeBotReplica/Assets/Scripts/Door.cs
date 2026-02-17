@@ -15,7 +15,7 @@ public class Door : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            AudioManager.Instance.PlaySound(Sounds.Success);
+            GameManager.Instance.CodeRan.Invoke(true);
             SceneManager.LoadScene(_sceneToLoad);
         }
     }
