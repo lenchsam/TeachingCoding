@@ -186,7 +186,7 @@ public class Interpreter : MonoBehaviour
             }
 
             //is a wall 1 unit away
-            return Physics.Raycast(pt.position, worldDir, 1f);
+            return Physics.Raycast(pt.position, worldDir, out RaycastHit hit, 1f, LayerMask.GetMask("Wall"));
         }
         return false;
     }
